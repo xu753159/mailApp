@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="recommend">
         <ul class="home-recommend">
             <li v-for="item in recommend">
                 <a :href="item.link">
@@ -25,17 +25,24 @@ export default {
 </script>
 
 <style>
+.recommend{
+    box-shadow: 0px 5px 3px 3px rgb(223, 221, 214);
+    padding: 20px 0;
+    margin-bottom: 10px;
+
+}
 .home-recommend{
-    padding: 10px 0;
     display: flex;
     height: 100px;
     list-style: none;
-    box-shadow: 0px 5px 3px 3px rgb(223, 221, 214);
 }
 .home-recommend img{
+    
     width: 100%;;
 }
 .home-recommend a{
+    font-size: 12px;
+    color: rgb(48, 46, 46);
     margin: 0 5px;
     display: block;
     flex: 1;
