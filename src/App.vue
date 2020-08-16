@@ -13,5 +13,7 @@
   }
   </script>
 <style>
+#app{position: relative;
+  overflow: hidden;}
 @import 'assets/css/normalize.css'
 </style>

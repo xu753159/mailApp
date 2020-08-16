@@ -1,11 +1,10 @@
 <template>
     <div class="goods-items">
-        <a href="">
+        <a :href="goods.link">
             <img :src="goods.show.img" alt="">
             <p>{{goods.title}}</p>
             <span>￥{{goods.price}}</span>
             <span>%{{goods.cfav}}</span>
-        
         </a>    
     </div>
 </template>
@@ -61,6 +60,7 @@ export default {
     padding-bottom:10px ;
     width: 100%;
     border-radius: 10px;
+    height: 100%;
 
 }
 </style>

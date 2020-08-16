@@ -25,6 +25,7 @@ export default {
     methods:{
         changeActive(index){
             this.currentIndex=index
+            this.$emit("tabClick",index)
         }
     }
 }
@@ -32,6 +33,7 @@ export default {
 
 <style>
 .tab-control{
+    position: relative;
     display: flex;
     font-size: 14px;
     background-color: #fff;
