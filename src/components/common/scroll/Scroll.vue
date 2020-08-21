@@ -46,6 +46,16 @@ export default {
   methods:{
       finishPullUp(){
           this.scroll.finishPullUp()
+      },
+      refresh(){
+          this.scroll.refresh()
+      },
+      scrollTo(x, y, time=500){
+				this.scroll && this.scroll.scrollTo(x, y, time)
+      },
+      getCurrentY(){
+        return this.scroll.position
+        console.log(this.scroll.position)
       }
   }
 };

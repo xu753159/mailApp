@@ -5,6 +5,7 @@ const Home =()=>import('views/home/home.vue')
 const Cart =()=>import('views/cart/cart.vue')
 const Profile=()=>import('views/profile/profile.vue')
 const Category =()=>import('views/category/category.vue')
+const Detail =()=>import('views/detail/Detail.vue')
 
 const originalPush = VueRouter.prototype.push
    VueRouter.prototype.push = function push(location) {
@@ -35,13 +36,19 @@ const routes = [
     {
       path:'/category',
       component:Category
+    },
+    {
+      path:'/detail/:iid',
+      component:Detail
     }
   
   ]
 
 
 const router = new VueRouter({
-    routes
+    routes,
+    mode: 'history',
+
 })
 
 export default router

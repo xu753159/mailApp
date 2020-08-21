@@ -230,7 +230,8 @@ export default {
     },
     data() {
         return {
-            scroll:null
+            scroll:null,
+            
         }
     },
     mounted() {
@@ -239,7 +240,7 @@ export default {
              pullUpLoad:true
          })
          this.scroll.on("scroll",(position)=>{
-             console.log(position)
+             console.log(position.y)
          })
          this.scroll.on("pullingUp",()=>{
              console.log("加載更多")

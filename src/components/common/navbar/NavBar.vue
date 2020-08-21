@@ -15,13 +15,14 @@ export default {
 <style>
 .nav-bar{
     display: flex;
+    /* position: absolute; */
     line-height: 44px;
     height: 44px;
-    position: fixed;
-    top: 0px;
+    /* position: fixed; */
+    top: 0px; 
     left: 0px;
-    right: 0px;
-    z-index: 9999;
+    right: 0px; 
+    /* z-index: 9999; */
 
 }
 .left,.right{
@@ -30,5 +31,12 @@ export default {
 .center{
     flex: 1;
     text-align: center;
+}
+.left img{
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 16px;
+  top:16px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="goods">
         <goods-item :goods="item" v-for="item in list" class="goods-control-item"></goods-item>
-        <p v-show="LoadEnd">图片加载结束</p>
+        <p v-show="LoadEnd">上滑加载更多</p>
     </div>
 </template>
 
@@ -24,7 +24,10 @@ export default {
                 return false
             }
         }
-    }
+    },
+    computed: {
+        
+    },
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
-    <div class="goods-items">
-        <a :href="goods.link">
-            <img :src="goods.show.img" alt="">
+    <div class="goods-items" >
+        <a :href="Goodlink">
+            <img :src="showImg" alt="" @load="imageLoad">
             <p>{{goods.title}}</p>
             <span>￥{{goods.price}}</span>
             <span>%{{goods.cfav}}</span>
@@ -17,6 +17,24 @@ export default {
             default(){
                 return  {}
             }
+        }, 
+    },
+    computed: {
+       showImg(){
+				return  this.goods.image || this.goods.show.img ;
+			}
+    },
+    data() {
+        return {
+            Goodlink:'/detail/'+this.goods.iid
+        }
+    },
+    methods:{
+        imageLoad(){
+            this.$bus.$emit("itemImageLoad")
+        },
+        DetailRequest(){
+            this.$router.push()
         }
     }
 }
