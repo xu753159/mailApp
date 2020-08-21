@@ -1,20 +1,27 @@
 <template>
-    <div id="detail" ref="scroll">
-        <detail-nav-bar class="detail-bar"></detail-nav-bar>
-         <scroll class="content" ref="scroll">
+    <div id="detail">
+        <detail-nav-bar class="detail-bar" @titleClick="titleClick" ref="nav" ></detail-nav-bar>
+         <scroll class="content" 
+         ref="scroll"
+          @currentPosition="contentScroll" 
+          :probe-type="3">
             <detail-swiper :topImages="topImages"></detail-swiper>
             <detail-goods :goods="goods" ></detail-goods>
             <detail-shop :shop="shop"></detail-shop>
-            <detail-info :detailInfo="detailInfo" @imageLoad="imageLoad"></detail-info>  
-            <detail-param-info :paramInfo="GoodsParam"></detail-param-info>
-            <detail-comment :commentInfo="CommentInfo"></detail-comment>
-            <goods-list :list="recommend"></goods-list>
-        </scroll>            
+            <detail-info :detailInfo="detailInfo" @imageLoad="imageLoad" ref="detailInfo"></detail-info>  
+            <detail-param-info :paramInfo="GoodsParam" ref="paramInfo"></detail-param-info>
+            <detail-comment :commentInfo="CommentInfo" ref="commnetInfo"></detail-comment>
+            <goods-list :list="recommend" ref="recommend"></goods-list>
+        </scroll>     
+         <back-top @click.native="backClick" v-show="backIsShow"></back-top>
+        <detail-bottom-bar></detail-bottom-bar>
     </div>
 </template>
 
 <script>
+import backTop from 'components/content/backtop/BackTop'
 import {debounce} from 'components/common/utils.js'
+import DetailBottomBar from './childComponents/DetailBottomBar'
 import GoodsList from 'components/content/goods/GoodsList.vue'
 import DetailComment from './childComponents/DetailComment'
 import DetailGoods from "./childComponents/DetailGoods"
@@ -29,6 +36,7 @@ export default {
     data() {
         return {
             iid:null,
+            backIsShow:false,
             topImages:[],
             shop:{},
             goods:{},
@@ -36,7 +44,9 @@ export default {
             GoodsParam:{},
             CommentInfo:[],
             recommend:[],
-            itemImgListener:null
+            itemImgListener:null,
+            themeTopY:[],
+            currentIndex:0
             }
     },
     created() {
@@ -51,6 +61,14 @@ export default {
             if(res.result.rate.cRate!==0){
                 this.CommentInfo=res.result.rate.list
             }
+            this.$nextTick(()=>{
+                // this.themeTopY=[]
+                // this.themeTopY.push(0)
+                // this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
+                // this.themeTopY.push(this.$refs.commnetInfo.$el.offsetTop)
+                // this.themeTopY.push(this.$refs.recommend.$el.offsetTop)
+                // console.log(this.themeTopY)
+            })
             })
 
         getDataRecommend().then(res=>{
@@ -67,15 +85,48 @@ export default {
         DetailInfo,
         DetailParamInfo,
         DetailComment,
-        GoodsList
+        GoodsList,
+        DetailBottomBar,
+        backTop
     },
     methods:{
         imageLoad(){
             this.$refs.scroll.refresh()
-        }
+            this.themeTopY=[]
+            this.themeTopY.push(0)
+            this.themeTopY.push(this.$refs.paramInfo.$el.offsetTop)
+            this.themeTopY.push(this.$refs.commnetInfo.$el.offsetTop)
+            this.themeTopY.push(this.$refs.recommend.$el.offsetTop)
+
+        },
+        titleClick(index){
+            this.$refs.scroll.scrollTo(0,-this.themeTopY[index],100)
+        },
+        contentScroll(position){
+            this.isShowBackTop = (-position.y) > 500;
+				const positionY = -(position.y);
+				let _lenth = this.themeTopY.length;
+				for(let i=0; i<_lenth-1; i++){
+					if(this.currentIndex !== i && (positionY >= this.themeTopY[i] && positionY < this.themeTopY[i+1])){
+                        this.currentIndex = i;
+                        console.log(i)
+						this.$refs.nav.currentIndex = this.currentIndex;
+					}
+                }
+            if(-position.y>1000){
+                this.backIsShow=true
+            }else{
+                this.backIsShow=false
+            }
+        },
+        backClick(){
+            this.$refs.scroll.scroll.scrollTo(0,0,500)
+        },
+    },
+    updated(){
+        
     },
     mounted(){
-        const refresh =debounce(this.$refs.scroll.refresh,500)
         this.itemImgListener=()=>{
             refresh()
         }

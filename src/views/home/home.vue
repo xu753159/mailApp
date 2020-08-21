@@ -164,7 +164,8 @@ export default {
         }
     },
     deactivated() {
-        this.SaveY=this.$refs.scroll.getCurrentY()
+        console.log("xxx1")
+        // this.SaveY=this.$refs.scroll.currentPosition(position)
 
         //取消全局事件监听
         this.$bus.$off('itemImageLoad',this.itemImgListener)
